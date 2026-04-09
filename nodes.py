@@ -1,9 +1,18 @@
 from .generator import DataCatalog, OriginalCharacterGenerator
+from .preset_store import SettingsPresetStore
 
 
 CATALOG = DataCatalog()
 GENERATOR = OriginalCharacterGenerator(CATALOG)
-SETTINGS_TYPE = "OC_CHARACTER_SETTINGS"
+PRESET_STORE = SettingsPresetStore()
+SETTINGS_TYPE = "OC_GENERATOR_SETTINGS"
+NODE_CATEGORY = "OC Generator"
+NODE_KEY_SETTINGS = "OC Generator Settings"
+NODE_KEY_SHOW_SETTINGS = "OC Generator Show Settings"
+NODE_KEY_LOAD_PRESET = "OC Generator Load Settings Preset"
+NODE_KEY_GENERATE = "OC Generator Generate Character"
+NODE_KEY_GENERATE_LIST = "OC Generator Generate Character List"
+NODE_KEY_GENERATE_SIMPLE = "OC Generator Generate Character Simple"
 
 
 def settings_input_spec():
@@ -59,7 +68,7 @@ def list_result_tuple(results):
 
 
 class OriginalCharacterSettings:
-    CATEGORY = "OC"
+    CATEGORY = NODE_CATEGORY
     FUNCTION = "build"
     RETURN_TYPES = (SETTINGS_TYPE, "STRING")
     RETURN_NAMES = ("settings", "settings_json")
@@ -76,7 +85,7 @@ class OriginalCharacterSettings:
 
 
 class GenerateOriginalCharacter:
-    CATEGORY = "OC"
+    CATEGORY = NODE_CATEGORY
     FUNCTION = "generate"
     RETURN_TYPES = (
         "STRING",
@@ -115,7 +124,7 @@ class GenerateOriginalCharacter:
 
 
 class GenerateOriginalCharacterList:
-    CATEGORY = "OC"
+    CATEGORY = NODE_CATEGORY
     FUNCTION = "generate"
     RETURN_TYPES = (
         "STRING",
@@ -166,7 +175,7 @@ class GenerateOriginalCharacterList:
 
 
 class GenerateOriginalCharacterSimple:
-    CATEGORY = "OC"
+    CATEGORY = NODE_CATEGORY
     FUNCTION = "generate"
     RETURN_TYPES = (
         "STRING",
@@ -269,16 +278,87 @@ class GenerateOriginalCharacterSimple:
         )
 
 
+class LoadOriginalCharacterSettingsPreset:
+    CATEGORY = NODE_CATEGORY
+    FUNCTION = "load"
+    RETURN_TYPES = (SETTINGS_TYPE, "STRING")
+    RETURN_NAMES = ("settings", "settings_json")
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        preset_names = PRESET_STORE.list_presets()
+        if not preset_names:
+            preset_names = ["(no presets found)"]
+
+        return {
+            "required": {
+                "preset_name": (preset_names, {"default": preset_names[0]}),
+            }
+        }
+
+    def load(self, preset_name):
+        if preset_name == "(no presets found)":
+            raise ValueError("No saved OC settings presets were found in user_presets.")
+
+        settings = PRESET_STORE.load(preset_name)
+        return (settings, GENERATOR.settings_to_json(settings))
+
+
+class ShowOriginalCharacterSettings:
+    CATEGORY = NODE_CATEGORY
+    FUNCTION = "show"
+    RETURN_TYPES = ("STRING", "STRING")
+    RETURN_NAMES = ("settings_json", "settings_summary")
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "settings": (SETTINGS_TYPE,),
+            }
+        }
+
+    def show(self, settings):
+        payload = dict(settings or {})
+        fixed = dict(payload.get("fixed", {}))
+        weights = dict(payload.get("weights", {}))
+        summary = "\n".join(
+            [
+                f"base_prompt: {payload.get('base_prompt', '')}",
+                f"preset: {payload.get('preset', 'Balanced')}",
+                f"production_mode: {bool(payload.get('production_mode', True))}",
+                "fixed:",
+                f"  hair_style: {fixed.get('hair_style', 'none')}",
+                f"  hair_color: {fixed.get('hair_color', 'none')}",
+                f"  eye_color: {fixed.get('eye_color', 'none')}",
+                f"  accessory: {fixed.get('accessory', 'none')}",
+                f"  bust_size: {fixed.get('bust_size', 'none')}",
+                "weights:",
+                f"  flat: {weights.get('flat', 0.0):.2f}",
+                f"  small: {weights.get('small', 0.0):.2f}",
+                f"  medium: {weights.get('medium', 0.0):.2f}",
+                f"  large: {weights.get('large', 0.0):.2f}",
+                f"  xlarge: {weights.get('xlarge', 0.0):.2f}",
+                f"accessory_probability: {float(payload.get('accessory_probability', 0.0)):.2f}",
+            ]
+        )
+        return (GENERATOR.settings_to_json(payload), summary)
+
+
 NODE_CLASS_MAPPINGS = {
-    "Original Character Settings": OriginalCharacterSettings,
-    "Generate Original Character": GenerateOriginalCharacter,
-    "Generate Original Character List": GenerateOriginalCharacterList,
-    "Generate Original Character Simple": GenerateOriginalCharacterSimple,
+    NODE_KEY_SETTINGS: OriginalCharacterSettings,
+    NODE_KEY_SHOW_SETTINGS: ShowOriginalCharacterSettings,
+    NODE_KEY_LOAD_PRESET: LoadOriginalCharacterSettingsPreset,
+    NODE_KEY_GENERATE: GenerateOriginalCharacter,
+    NODE_KEY_GENERATE_LIST: GenerateOriginalCharacterList,
+    NODE_KEY_GENERATE_SIMPLE: GenerateOriginalCharacterSimple,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "Original Character Settings": "Original Character Settings",
-    "Generate Original Character": "Generate Original Character",
-    "Generate Original Character List": "Generate Original Character List",
-    "Generate Original Character Simple": "Generate Original Character Simple",
+    NODE_KEY_SETTINGS: "OC Generator / Settings",
+    NODE_KEY_SHOW_SETTINGS: "OC Generator / Show Settings",
+    NODE_KEY_LOAD_PRESET: "OC Generator / Load Settings Preset",
+    NODE_KEY_GENERATE: "OC Generator / Generate Character",
+    NODE_KEY_GENERATE_LIST: "OC Generator / Generate Character List",
+    NODE_KEY_GENERATE_SIMPLE: "OC Generator / Generate Character Simple",
 }

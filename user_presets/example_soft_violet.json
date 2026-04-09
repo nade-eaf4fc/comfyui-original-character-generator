@@ -1,0 +1,20 @@
+{
+  "accessory_probability": 0.62,
+  "base_prompt": "masterpiece, best quality, 1girl, solo, anime style",
+  "fixed": {
+    "accessory": "large hair ribbon",
+    "bust_size": "none",
+    "eye_color": "violet eyes",
+    "hair_color": "lavender hair",
+    "hair_style": "flowing twin tails"
+  },
+  "preset": "Balanced",
+  "production_mode": true,
+  "weights": {
+    "flat": 0.14,
+    "large": 0.12,
+    "medium": 0.22,
+    "small": 0.42,
+    "xlarge": 0.1
+  }
+}

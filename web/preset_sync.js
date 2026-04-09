@@ -3,7 +3,7 @@ import { app } from "../../../scripts/app.js";
 app.registerExtension({
   name: "comfyui.generate_original_character.preset_sync",
   beforeRegisterNodeDef(nodeType, nodeData) {
-    if (!["Original Character Settings", "Generate Original Character Simple"].includes(nodeData.name)) {
+    if (!["OC Generator Settings", "OC Generator Generate Character Simple"].includes(nodeData.name)) {
       return;
     }
 

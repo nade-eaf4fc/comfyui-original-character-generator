@@ -1,0 +1,3 @@
+*.json
+!.gitignore
+!example_soft_violet.json

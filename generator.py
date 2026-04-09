@@ -247,7 +247,7 @@ class OriginalCharacterGenerator:
         return fallback_option
 
     def choose_accessory(self, rng, category, fixed_accessory, accessory_probability):
-        if fixed_accessory == "none":
+        if fixed_accessory == "__none__":
             return None
 
         resolved_fixed = self.resolve_option(category, fixed_accessory)
