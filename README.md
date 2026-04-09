@@ -18,7 +18,7 @@ If you want to try the generator in your browser first, use the web version here
 
 - [original-character-generator-web](https://nade-eaf4fc.github.io/original-character-generator-web/)
 
-The web app can export `settings_json` files and save compatible presets for this ComfyUI node set.
+The web app can export compatible `settings_json` files for this ComfyUI node set.
 
 ## Features
 
@@ -65,6 +65,7 @@ Builds a reusable settings object and also outputs `settings_json`.
 Inputs:
 
 - `base_prompt`
+- `include_base_prompt`
 - `preset`
 - `fixed_hair_style`
 - `fixed_hair_color`
@@ -172,7 +173,7 @@ Sample preset:
 
 - [`user_presets/example_soft_violet.json`](user_presets/example_soft_violet.json)
 
-The web UI can also save compatible `settings_json` files into this directory when ComfyUI is running.
+The companion web UI can export compatible `settings_json` files that can be imported into this node set.
 
 ## Example Files
 
@@ -190,6 +191,8 @@ Image examples:
 - The same `seed`, settings, and data files will produce the same result.
 - List generation uses `seed + index`.
 - Bust weights accept raw values in the `0.00` to `1.00` range and are normalized internally.
+- `include_base_prompt = false` omits the base prompt from generated output.
+- If `include_base_prompt = true` and `base_prompt` is empty, the default base prompt is used.
 - If all bust weights are `0`, generation falls back to the `Balanced` preset distribution.
 - `fixed_bust_size` overrides weighted bust selection.
 - `fixed_accessory` overrides accessory probability when a concrete accessory is selected.
