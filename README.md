@@ -193,6 +193,10 @@ Supported option fields:
 
 Simple string entries are also supported in category files.
 
+## Acknowledgements
+
+Built with development assistance from OpenAI Codex, powered by GPT-5.4.
+
 ## License
 
 This package is released under the MIT License.
