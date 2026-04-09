@@ -136,6 +136,7 @@ class OriginalCharacterGenerator:
         self,
         *,
         base_prompt,
+        include_base_prompt,
         preset,
         fixed_hair_style,
         fixed_hair_color,
@@ -153,6 +154,7 @@ class OriginalCharacterGenerator:
         preset_name = preset if preset in self.catalog.preset_names else SAFE_FALLBACK_PRESET
         return {
             "base_prompt": str(base_prompt or "").strip(),
+            "include_base_prompt": bool(include_base_prompt),
             "preset": preset_name,
             "fixed": {
                 "hair_style": fixed_hair_style or "none",
@@ -330,7 +332,15 @@ class OriginalCharacterGenerator:
             {"category": categories["bustSize"], "option": bust_size},
         ]
 
-        effective_base_prompt = str(settings.get("base_prompt", "") or "").strip() or self.catalog.default_base_prompt
+        raw_base_prompt = str(settings.get("base_prompt", "") or "").strip()
+        include_base_prompt = settings.get("include_base_prompt")
+        if include_base_prompt is None:
+            include_base_prompt = bool(raw_base_prompt)
+
+        effective_base_prompt = ""
+        if bool(include_base_prompt):
+            effective_base_prompt = raw_base_prompt or self.catalog.default_base_prompt
+
         prompt = self.format_prompt(effective_base_prompt, selected_entries)
         name = self.build_name(selected_entries)
         formatted_prompt = self.build_formatted_prompt(name, prompt)
@@ -338,6 +348,7 @@ class OriginalCharacterGenerator:
         metadata = {
             "seed": int(seed),
             "base_prompt": effective_base_prompt,
+            "include_base_prompt": bool(include_base_prompt),
             "preset": settings.get("preset", SAFE_FALLBACK_PRESET),
             "production_mode": bool(settings.get("production_mode", True)),
             "fixed": fixed,
@@ -379,6 +390,7 @@ class OriginalCharacterGenerator:
         *,
         seed,
         base_prompt,
+        include_base_prompt,
         preset,
         fixed_hair_style,
         fixed_hair_color,
@@ -395,6 +407,7 @@ class OriginalCharacterGenerator:
     ):
         settings = self.build_settings(
             base_prompt=base_prompt,
+            include_base_prompt=include_base_prompt,
             preset=preset,
             fixed_hair_style=fixed_hair_style,
             fixed_hair_color=fixed_hair_color,

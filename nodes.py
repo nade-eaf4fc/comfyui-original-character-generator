@@ -20,6 +20,7 @@ def settings_input_spec():
     balanced = CATALOG.get_preset("Balanced")
     return {
         "base_prompt": ("STRING", {"default": CATALOG.default_base_prompt, "multiline": True}),
+        "include_base_prompt": ("BOOLEAN", {"default": False}),
         "preset": (list(CATALOG.preset_names), {"default": "Balanced"}),
         "fixed_hair_style": (list(CATALOG.get_fixed_choices("hairStyle")), {"default": "none"}),
         "fixed_hair_color": (list(CATALOG.get_fixed_choices("hairColor")), {"default": "none"}),
@@ -326,6 +327,7 @@ class ShowOriginalCharacterSettings:
         summary = "\n".join(
             [
                 f"base_prompt: {payload.get('base_prompt', '')}",
+                f"include_base_prompt: {bool(payload.get('include_base_prompt', False))}",
                 f"preset: {payload.get('preset', 'Balanced')}",
                 f"production_mode: {bool(payload.get('production_mode', True))}",
                 "fixed:",

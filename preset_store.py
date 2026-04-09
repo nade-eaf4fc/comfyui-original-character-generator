@@ -37,12 +37,18 @@ def normalize_settings_payload(candidate):
 
     normalized = {
         "base_prompt": str(candidate.get("base_prompt", "") or "").strip(),
+        "include_base_prompt": False,
         "preset": str(candidate.get("preset", SAFE_FALLBACK_PRESET) or SAFE_FALLBACK_PRESET),
         "fixed": {},
         "weights": {},
         "accessory_probability": clamp_probability(candidate.get("accessory_probability", 0.0), 0.0),
         "production_mode": bool(candidate.get("production_mode", True)),
     }
+
+    if "include_base_prompt" in candidate:
+        normalized["include_base_prompt"] = bool(candidate.get("include_base_prompt", False))
+    else:
+        normalized["include_base_prompt"] = bool(normalized["base_prompt"])
 
     for key in FIXED_CATEGORY_KEYS:
         value = fixed.get(key, "none")
