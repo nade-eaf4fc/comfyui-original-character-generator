@@ -12,6 +12,14 @@ ComfyUI custom nodes for generating original character prompts and reusable sett
 
 ![Saved preset](docs/images/settings-preset.png)
 
+## Try the Web Version
+
+If you want to try the generator in your browser first, use the web version here:
+
+- [original-character-generator-web](https://nade-eaf4fc.github.io/original-character-generator-web/)
+
+The web app can export `settings_json` files and save compatible presets for this ComfyUI node set.
+
 ## Features
 
 - Generate original character prompts from reusable settings objects
@@ -33,7 +41,7 @@ ComfyUI custom nodes for generating original character prompts and reusable sett
 
 ```bash
 cd ComfyUI/custom_nodes
-git clone https://github.com/<your-user>/comfyui-original-character-generator.git
+git clone https://github.com/nade-eaf4fc/comfyui-original-character-generator.git
 ```
 
 After cloning, restart ComfyUI.
