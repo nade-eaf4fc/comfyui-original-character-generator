@@ -1,103 +1,59 @@
-# Generate Original Character
+# comfyui-original-character-generator
 
-ComfyUI custom nodes for generating original character base prompts from external data.
+ComfyUI custom nodes for generating original character prompts and reusable settings.
 
-外部データから OC 素体向けプロンプトを生成する ComfyUI カスタムノード群です。
+## Screenshots
 
-## Overview / 概要
+### Workflow Overview
 
-This package provides four nodes:
+![Workflow overview](docs/images/workflow-overview.png)
 
-- `Original Character Settings`
-- `Generate Original Character`
-- `Generate Original Character List`
-- `Generate Original Character Simple`
+### Saved Settings Preset
 
-このパッケージには次の4ノードが含まれます。
+![Saved preset](docs/images/settings-preset.png)
 
-- `Original Character Settings`
-- `Generate Original Character`
-- `Generate Original Character List`
-- `Generate Original Character Simple`
+## Features
 
-Recommended workflow / 推奨ワークフロー:
+- Generate original character prompts from reusable settings objects
+- Use fixed attributes for hair style, hair color, eye color, accessory, and bust size
+- Adjust weighted bust-size distribution and accessory probability
+- Save and load `settings_json` presets from `user_presets`
+- Inspect settings with a dedicated `Show Settings` node
+- Use included sample workflows and sample preset data
 
-1. Build shared settings with `Original Character Settings`
-2. Send them to `Generate Original Character` for single output
-3. Or send them to `Generate Original Character List` for list output
+## Installation
 
-1. `Original Character Settings` で共通設定を作る
-2. 単発生成は `Generate Original Character` に渡す
-3. リスト生成は `Generate Original Character List` に渡す
+### Option 1: Download or copy the folder
 
-For onboarding, `Generate Original Character Simple` is also included as a one-node version.
-
-導入用に、1ノード完結の `Generate Original Character Simple` も同梱しています。
-
-## Features / 特徴
-
-- Deterministic generation with `seed`
-- Separate single and list generation nodes
-- Shared settings node
-- One-node simple variant
-- Reproducible list generation with `seed + index`
-- Fixed attribute support
-- Weighted bust-size selection
-- Accessory probability control
-- External data files for easier extension
-- `production_mode` support for filtering development-only entries
-
-- `seed` による再現可能な生成
-- 単発生成ノードと list 生成ノードの分離
-- 共通設定ノード
-- 1ノード完結の simple ノード
-- `seed + index` による list 各要素の再現性
-- 属性固定対応
-- 胸サイズの重み付き選択
-- アクセサリー出現率の調整
-- データ定義を外部ファイル化
-- `production_mode` による開発用候補の除外
-
-## Installation / インストール
-
-1. Copy this folder into `ComfyUI/custom_nodes/`.
+1. Place this repository folder inside `ComfyUI/custom_nodes/`.
 2. Restart ComfyUI.
-3. Reload the browser UI if needed.
-4. Search for the node names above.
+3. Search for `OC Generator` in the node menu.
 
-1. このフォルダを `ComfyUI/custom_nodes/` に入れます。
-2. ComfyUI を再起動します。
-3. 必要ならブラウザ UI を再読込します。
-4. 上記ノード名で検索して使用します。
+### Option 2: git clone
 
-Recommended folder name / 推奨フォルダ名:
+```bash
+cd ComfyUI/custom_nodes
+git clone https://github.com/<your-user>/comfyui-original-character-generator.git
+```
 
-- `comfyui_generate_original_character`
+After cloning, restart ComfyUI.
 
-## Included Files / 同梱ファイル
+## Included Nodes
 
-- `__init__.py`
-- `nodes.py`
-- `generator.py`
-- `web/preset_sync.js`
-- `data/base_prompt.json`
-- `data/presets.json`
-- `data/hair_styles.json`
-- `data/hair_colors.json`
-- `data/eye_colors.json`
-- `data/accessories.json`
-- `data/bust_sizes.json`
-- `LICENSE`
+The current node set is:
 
-## Node List / ノード一覧
+- `OC Generator / Settings`
+- `OC Generator / Show Settings`
+- `OC Generator / Load Settings Preset`
+- `OC Generator / Generate Character`
+- `OC Generator / Generate Character List`
+- `OC Generator / Generate Character Simple`
 
-### 1. `Original Character Settings`
+### `OC Generator / Settings`
 
-Builds a reusable settings object for the generation nodes.
+Builds a reusable settings object and also outputs `settings_json`.
 
-生成ノードに渡せる共通設定オブジェクトを作ります。
-
-Inputs / 入力:
+Inputs:
 
 - `base_prompt`
 - `preset`
@@ -114,23 +70,34 @@ Inputs / 入力:
 - `accessory_probability`
 - `production_mode`
 
-Outputs / 出力:
+Outputs:
 
 - `settings`
 - `settings_json`
 
-### 2. `Generate Original Character`
+### `OC Generator / Show Settings`
 
-Single-output generator that receives `settings`.
+Displays a settings object as raw `settings_json` and a readable text summary.
 
-`settings` を受け取る単発生成ノードです。
+Outputs:
 
-Inputs / 入力:
+- `settings_json`
+- `settings_summary`
 
-- `seed`
+### `OC Generator / Load Settings Preset`
+
+Loads a saved preset from the `user_presets` directory.
+
+Outputs:
+
 - `settings`
+- `settings_json`
 
-Outputs / 出力:
+### `OC Generator / Generate Character`
+
+Generates one result from a `settings` object.
+
+Outputs:
 
 - `prompt`
 - `formatted_prompt`
@@ -142,19 +109,11 @@ Outputs / 出力:
 - `bust_size`
 - `metadata_json`
 
-### 3. `Generate Original Character List`
+### `OC Generator / Generate Character List`
 
-List-output generator that receives `settings`.
+Generates multiple results from a `settings` object.
 
-`settings` を受け取る list 生成ノードです。
-
-Inputs / 入力:
-
-- `seed`
-- `list_count`
-- `settings`
-
-Outputs / 出力:
+Outputs:
 
 - `prompt_list`
 - `formatted_prompt_list`
@@ -166,138 +125,65 @@ Outputs / 出力:
 - `bust_size_list`
 - `metadata_list`
 
-### 4. `Generate Original Character Simple`
+### `OC Generator / Generate Character Simple`
 
-One-node version for quick use.
+One-node version for quick use. It includes the same setting inputs and can output either a single result or a list.
 
-手早く使うための 1 ノード完結版です。
+## Presets and Saved Settings
 
-Inputs / 入力:
-
-- `seed`
-- `output_mode`
-- `list_count`
-- all settings inputs from `Original Character Settings`
-
-Outputs / 出力:
-
-- single outputs
-- list outputs
-- `metadata_json`
-- `metadata_list`
-
-## Seed Reproducibility / seed 再現性
-
-- The same `seed`, settings, and data files produce the same result.
-- `Generate Original Character List` uses `seed + index`.
-- `Generate Original Character Simple` also uses `seed + index` when `output_mode = list`.
-
-- 同じ `seed`、同じ設定、同じデータであれば同じ結果を返します。
-- `Generate Original Character List` は `seed + index` で各要素を生成します。
-- `Generate Original Character Simple` でも `output_mode = list` 時は同様です。
-
-## Presets / プリセット
-
-Available presets / 利用可能プリセット:
+Built-in presets:
 
 - `Balanced`
 - `Petite`
 - `Curvy`
 - `Statement`
 
-Each preset defines:
+Saved preset files are stored in:
 
-- bust weights
-- accessory probability
+- `user_presets/*.json`
 
-各プリセットは次を定義します。
+Sample preset:
 
-- 胸サイズ重み
-- アクセサリー出現率
+- [`user_presets/example_soft_violet.json`](user_presets/example_soft_violet.json)
 
-`web/preset_sync.js` copies preset values into the numeric widgets for:
+The web UI can also save compatible `settings_json` files into this directory when ComfyUI is running.
 
-- `Original Character Settings`
-- `Generate Original Character Simple`
+## Example Files
 
-`web/preset_sync.js` は次のノードで preset を数値欄へ反映します。
+Workflow examples:
 
-- `Original Character Settings`
-- `Generate Original Character Simple`
+- [`workflows/oc-generator-basic-workflow.json`](workflows/oc-generator-basic-workflow.json)
+- [`workflows/oc-generator-soft-violet-preset-workflow.json`](workflows/oc-generator-soft-violet-preset-workflow.json)
 
-## Priority Rules / 優先順位
+Image examples:
 
-Priority is shared across all generator surfaces.
+- [`examples`](examples)
 
-優先順位はすべての生成ノードで共通です。
+## Behavior Notes
 
-1. Fixed inputs have the highest priority.
-2. `fixed_bust_size` overrides all bust weights.
-3. `fixed_accessory` overrides `accessory_probability`.
-4. `fixed_accessory = none` forces no accessory prompt.
-5. Preset selection provides the baseline values.
-6. Manual weight and probability edits after preset selection are the actual values used.
+- The same `seed`, settings, and data files will produce the same result.
+- List generation uses `seed + index`.
+- Bust weights accept raw values in the `0.00` to `1.00` range and are normalized internally.
+- If all bust weights are `0`, generation falls back to the `Balanced` preset distribution.
+- `fixed_bust_size` overrides weighted bust selection.
+- `fixed_accessory` overrides accessory probability when a concrete accessory is selected.
+- `fixed_accessory = none` means no fixed accessory in the node UI.
+- The special forced-no-accessory state is supported through saved `settings_json` data from the web integration.
+- `production_mode = true` hides entries marked with `developmentOnly: true`.
 
-1. 固定入力が最優先です。
-2. `fixed_bust_size` は胸サイズ重みより優先されます。
-3. `fixed_accessory` は `accessory_probability` より優先されます。
-4. `fixed_accessory = none` の場合はアクセサリー語を追加しません。
-5. preset は基準値です。
-6. preset 適用後に手動変更した weight / probability が最終的に使われる値です。
+## Extending Data
 
-## Bust Size Behavior / 胸サイズ仕様
+Edit the JSON files under `data/`:
 
-- Supported values: `flat`, `small`, `medium`, `large`, `xlarge`
-- Weights are expected in the `0.00` to `1.00` range
-- The total does not need to equal `1.00`
-- Weights are normalized internally
-- If the total is `0`, the node falls back to `Balanced`
-- Fallback information is included in metadata
+- `data/base_prompt.json`
+- `data/presets.json`
+- `data/hair_styles.json`
+- `data/hair_colors.json`
+- `data/eye_colors.json`
+- `data/accessories.json`
+- `data/bust_sizes.json`
 
-- 対応値: `flat`, `small`, `medium`, `large`, `xlarge`
-- weight は `0.00` から `1.00` を想定します
-- 合計が `1.00` である必要はありません
-- ノード内部で正規化して使用します
-- 合計が `0` の場合は `Balanced` にフォールバックします
-- フォールバック情報は metadata に含まれます
-
-## Accessory Behavior / アクセサリー仕様
-
-- `accessory_probability` is the probability of generating an accessory
-- `none` is always treated as `1 - p`
-- On failure, no accessory prompt is added
-- On success, one accessory is selected from the accessory pool
-
-- `accessory_probability` は「アクセサリーあり」の確率です
-- `none` は常に `1 - p` として扱われます
-- 失敗時はアクセサリー語を追加しません
-- 成功時のみ候補から1件選択します
-
-## Base Prompt / ベースプロンプト
-
-- `base_prompt` is a direct setting input
-- If `base_prompt` is empty, the packaged default from `data/base_prompt.json` is used
-
-- `base_prompt` は設定入力です
-- 空の場合は `data/base_prompt.json` の既定値を使います
-
-## Formatted Prompt Format / formatted_prompt 形式
-
-```text
-name: ...
-positive: ...
-negative:
-
-----------
-```
-
-## Data Extension / データ拡張
-
-Edit or add JSON files under `data/`.
-
-`data/` 以下の JSON を編集または追加してください。
-
-Supported option fields / 対応フィールド:
+Supported option fields:
 
 - `key`
 - `prompt`
@@ -305,32 +191,8 @@ Supported option fields / 対応フィールド:
 - `name`
 - `developmentOnly`
 
-Plain strings are also supported for simple entries.
+Simple string entries are also supported in category files.
 
-単純な候補なら文字列だけでも定義できます。
-
-## production_mode and developmentOnly / production_mode と developmentOnly
-
-- `production_mode = true` excludes entries marked with `developmentOnly: true`
-- `production_mode = false` includes them
-- If a fixed value targets a filtered entry, the node falls back to normal selection
-
-- `production_mode = true` では `developmentOnly: true` の候補を除外します
-- `production_mode = false` ではそれらも含めます
-- 固定値が除外対象を指していた場合は通常選択へフォールバックします
-
-## Known Limitations / 既知の制約
-
-- If the frontend extension does not load, preset selection alone will not rewrite current numeric widget values.
-- `metadata_list` is returned as a list of JSON strings.
-- v1 does not include separate data-validator or preview nodes.
-
-- フロントエンド拡張が読み込まれない場合、preset 変更だけでは数値ウィジェットへ反映されません。
-- `metadata_list` は JSON 文字列のリストとして返します。
-- v1 にはデータ検証専用ノードやプレビュー専用ノードは含まれていません。
-
-## License / ライセンス
+## License
 
 This package is released under the MIT License.
-
-このパッケージは MIT License で公開しています。
