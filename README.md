@@ -52,6 +52,7 @@ The current node set is:
 
 - `OC Generator / Settings`
 - `OC Generator / Show Settings`
+- `OC Generator / Save Settings JSON`
 - `OC Generator / Load Settings Preset`
 - `OC Generator / Generate Character`
 - `OC Generator / Generate Character List`
@@ -91,6 +92,23 @@ Outputs:
 
 - `settings_json`
 - `settings_summary`
+
+### `OC Generator / Save Settings JSON`
+
+Parses a `settings_json` string, optionally saves it into `user_presets`, and outputs a reusable `settings` object.
+
+Inputs:
+
+- `settings_json`
+- `file_name`
+- `save_enabled`
+
+Outputs:
+
+- `settings`
+- `settings_json`
+- `saved_name`
+- `saved_path`
 
 ### `OC Generator / Load Settings Preset`
 

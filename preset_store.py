@@ -91,3 +91,14 @@ class SettingsPresetStore:
             "path": str(path),
             "settings": payload,
         }
+
+    def parse_settings_json(self, settings_json):
+        try:
+            payload = json.loads(str(settings_json or "{}"))
+        except json.JSONDecodeError as error:
+            raise ValueError(f"settings_json is not valid JSON: {error.msg}") from error
+
+        if not isinstance(payload, dict):
+            raise ValueError("settings_json must be a JSON object.")
+
+        return normalize_settings_payload(payload)

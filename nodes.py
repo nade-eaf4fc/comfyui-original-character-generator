@@ -9,6 +9,7 @@ SETTINGS_TYPE = "OC_GENERATOR_SETTINGS"
 NODE_CATEGORY = "OC Generator"
 NODE_KEY_SETTINGS = "OC Generator Settings"
 NODE_KEY_SHOW_SETTINGS = "OC Generator Show Settings"
+NODE_KEY_SAVE_SETTINGS_JSON = "OC Generator Save Settings JSON"
 NODE_KEY_LOAD_PRESET = "OC Generator Load Settings Preset"
 NODE_KEY_GENERATE = "OC Generator Generate Character"
 NODE_KEY_GENERATE_LIST = "OC Generator Generate Character List"
@@ -345,9 +346,40 @@ class ShowOriginalCharacterSettings:
         return (GENERATOR.settings_to_json(payload), summary)
 
 
+class SaveOriginalCharacterSettingsJson:
+    CATEGORY = NODE_CATEGORY
+    FUNCTION = "save"
+    RETURN_TYPES = (SETTINGS_TYPE, "STRING", "STRING", "STRING")
+    RETURN_NAMES = ("settings", "settings_json", "saved_name", "saved_path")
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "settings_json": ("STRING", {"multiline": True, "default": "{}"}),
+                "file_name": ("STRING", {"default": "oc_settings"}),
+                "save_enabled": ("BOOLEAN", {"default": True}),
+            }
+        }
+
+    def save(self, settings_json, file_name, save_enabled):
+        settings = PRESET_STORE.parse_settings_json(settings_json)
+        normalized_json = GENERATOR.settings_to_json(settings)
+        saved_name = ""
+        saved_path = ""
+
+        if save_enabled:
+            saved = PRESET_STORE.save(file_name, settings)
+            saved_name = saved["name"]
+            saved_path = saved["path"]
+
+        return (settings, normalized_json, saved_name, saved_path)
+
+
 NODE_CLASS_MAPPINGS = {
     NODE_KEY_SETTINGS: OriginalCharacterSettings,
     NODE_KEY_SHOW_SETTINGS: ShowOriginalCharacterSettings,
+    NODE_KEY_SAVE_SETTINGS_JSON: SaveOriginalCharacterSettingsJson,
     NODE_KEY_LOAD_PRESET: LoadOriginalCharacterSettingsPreset,
     NODE_KEY_GENERATE: GenerateOriginalCharacter,
     NODE_KEY_GENERATE_LIST: GenerateOriginalCharacterList,
@@ -357,6 +389,7 @@ NODE_CLASS_MAPPINGS = {
 NODE_DISPLAY_NAME_MAPPINGS = {
     NODE_KEY_SETTINGS: "OC Generator / Settings",
     NODE_KEY_SHOW_SETTINGS: "OC Generator / Show Settings",
+    NODE_KEY_SAVE_SETTINGS_JSON: "OC Generator / Save Settings JSON",
     NODE_KEY_LOAD_PRESET: "OC Generator / Load Settings Preset",
     NODE_KEY_GENERATE: "OC Generator / Generate Character",
     NODE_KEY_GENERATE_LIST: "OC Generator / Generate Character List",
