@@ -1,0 +1,22 @@
+{
+  "key": "accessory",
+  "label": "Accessory",
+  "tagType": "acc",
+  "description": "presence rate in advanced settings",
+  "optional": true,
+  "includeChance": 0.7,
+  "emptyLabel": "none",
+  "includeInName": true,
+  "values": [
+    "small hair ribbon",
+    "hair clip",
+    "hair pin",
+    "flower hairpin",
+    "simple headband",
+    "thin headband",
+    "stud earrings",
+    "simple earrings",
+    "small bow",
+    "hairband"
+  ]
+}

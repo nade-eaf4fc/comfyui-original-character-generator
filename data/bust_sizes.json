@@ -1,0 +1,39 @@
+{
+  "key": "bustSize",
+  "label": "Bust",
+  "tagType": "bust",
+  "description": "weighted selection",
+  "includeInName": true,
+  "values": [
+    {
+      "key": "flat",
+      "label": "flat",
+      "name": "flat",
+      "prompt": "flat chest"
+    },
+    {
+      "key": "small",
+      "label": "small",
+      "name": "small",
+      "prompt": "small breasts"
+    },
+    {
+      "key": "medium",
+      "label": "medium",
+      "name": "medium",
+      "prompt": "medium breasts"
+    },
+    {
+      "key": "large",
+      "label": "large",
+      "name": "large",
+      "prompt": "large breasts"
+    },
+    {
+      "key": "xlarge",
+      "label": "xlarge",
+      "name": "xlarge",
+      "prompt": "very large breasts"
+    }
+  ]
+}

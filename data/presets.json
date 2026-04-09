@@ -1,0 +1,42 @@
+{
+  "Balanced": {
+    "bust_weights": {
+      "flat": 0.18,
+      "small": 0.28,
+      "medium": 0.26,
+      "large": 0.18,
+      "xlarge": 0.1
+    },
+    "accessory_probability": 0.58
+  },
+  "Petite": {
+    "bust_weights": {
+      "flat": 0.44,
+      "small": 0.28,
+      "medium": 0.16,
+      "large": 0.08,
+      "xlarge": 0.04
+    },
+    "accessory_probability": 0.38
+  },
+  "Curvy": {
+    "bust_weights": {
+      "flat": 0.08,
+      "small": 0.16,
+      "medium": 0.28,
+      "large": 0.28,
+      "xlarge": 0.2
+    },
+    "accessory_probability": 0.72
+  },
+  "Statement": {
+    "bust_weights": {
+      "flat": 0.04,
+      "small": 0.1,
+      "medium": 0.2,
+      "large": 0.3,
+      "xlarge": 0.36
+    },
+    "accessory_probability": 0.86
+  }
+}
