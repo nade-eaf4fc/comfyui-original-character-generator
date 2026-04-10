@@ -1,5 +1,12 @@
 # comfyui-original-character-generator
 
+![Platform](https://img.shields.io/badge/Platform-ComfyUI%20Node-1f2937?style=flat-square)
+![Category](https://img.shields.io/badge/Category-OC%20Generator-2563eb?style=flat-square)
+![Nodes](https://img.shields.io/badge/Nodes-7%20Included-0f766e?style=flat-square)
+![Settings](https://img.shields.io/badge/Settings-JSON%20Ready-f59e0b?style=flat-square)
+![Presets](https://img.shields.io/badge/Presets-user__presets-7c3aed?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-374151?style=flat-square)
+
 ComfyUI custom nodes for generating original character prompts and reusable settings.
 
 ## Screenshots
