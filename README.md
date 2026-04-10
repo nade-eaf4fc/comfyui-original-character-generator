@@ -19,6 +19,21 @@ ComfyUI custom nodes for generating original character prompts and reusable sett
 
 ![Saved preset](docs/images/settings-preset.png)
 
+## Sample Outputs
+
+<p align="center">
+  <img src="examples/original-character-example-01.png" alt="Original character example 01" width="30%" />
+  <img src="examples/original-character-example-02.png" alt="Original character example 02" width="30%" />
+  <img src="examples/original-character-example-03.png" alt="Original character example 03" width="30%" />
+</p>
+<p align="center">
+  <img src="examples/original-character-example-04.png" alt="Original character example 04" width="30%" />
+  <img src="examples/original-character-example-05.png" alt="Original character example 05" width="30%" />
+  <img src="examples/original-character-example-06.png" alt="Original character example 06" width="30%" />
+</p>
+
+More examples are available in [`examples/`](examples).
+
 ## Try the Web Version
 
 If you want to try the generator in your browser first, use the web version here:
