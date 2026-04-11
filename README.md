@@ -82,7 +82,7 @@ The current node set is:
 
 ### `OC Generator / Settings`
 
-Builds a reusable settings object and also outputs `settings_json`.
+Builds a reusable OC setting object and also outputs `settings_json`.
 
 Inputs:
 
@@ -104,21 +104,18 @@ Inputs:
 
 Outputs:
 
-- `settings`
+- `oc_setting`
 - `settings_json`
 
 ### `OC Generator / Show Settings`
 
-Displays a settings object as raw `settings_json` and a readable text summary.
+Displays a readable settings summary directly inside the node.
 
-Outputs:
-
-- `settings_json`
-- `settings_summary`
+This node has no outputs.
 
 ### `OC Generator / Save Settings JSON`
 
-Parses a `settings_json` string, optionally saves it into `user_presets`, and outputs a reusable `settings` object.
+Parses a `settings_json` string, optionally saves it into `user_presets`, and outputs a reusable OC setting object.
 
 Inputs:
 
@@ -128,7 +125,7 @@ Inputs:
 
 Outputs:
 
-- `settings`
+- `oc_setting`
 - `settings_json`
 - `saved_name`
 - `saved_path`
@@ -139,12 +136,12 @@ Loads a saved preset from the `user_presets` directory.
 
 Outputs:
 
-- `settings`
+- `oc_setting`
 - `settings_json`
 
 ### `OC Generator / Generate Character`
 
-Generates one result from a `settings` object.
+Generates one result from an `oc_setting` object.
 
 Outputs:
 
@@ -160,7 +157,7 @@ Outputs:
 
 ### `OC Generator / Generate Character List`
 
-Generates multiple results from a `settings` object.
+Generates multiple results from an `oc_setting` object.
 
 Outputs:
 
