@@ -54,6 +54,12 @@ If you want to try the generator in your browser first, use the web version here
 
 The web app can export compatible `settings_json` files for this ComfyUI node set.
 
+## Note for Existing Users
+
+Some recent updates may break existing workflows or require reconnecting nodes.
+
+Sorry for the inconvenience, and thank you to everyone who already cloned and tried the project.
+
 ## Features
 
 - Generate original character prompts from reusable settings objects
