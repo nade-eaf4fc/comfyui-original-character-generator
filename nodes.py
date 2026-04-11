@@ -351,6 +351,7 @@ class ShowOriginalCharacterSettings:
 class SaveOriginalCharacterSettingsJson:
     CATEGORY = NODE_CATEGORY
     FUNCTION = "save"
+    OUTPUT_NODE = True
     RETURN_TYPES = (SETTINGS_TYPE, "STRING", "STRING", "STRING")
     RETURN_NAMES = ("settings", "settings_json", "saved_name", "saved_path")
 
