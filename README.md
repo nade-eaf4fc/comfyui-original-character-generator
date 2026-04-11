@@ -35,16 +35,16 @@ ComfyUI custom nodes for generating original character prompts and reusable sett
 ### Workflow Render Samples
 
 <p align="center">
-  <img src="examples/OC/ComfyUI_00001_.png" alt="Workflow render sample 01" width="30%" />
-  <img src="examples/OC/ComfyUI_00002_.png" alt="Workflow render sample 02" width="30%" />
-  <img src="examples/OC/ComfyUI_00003_.png" alt="Workflow render sample 03" width="30%" />
+  <img src="examples/ComfyUI_00001_.png" alt="Workflow render sample 01" width="30%" />
+  <img src="examples/ComfyUI_00002_.png" alt="Workflow render sample 02" width="30%" />
+  <img src="examples/ComfyUI_00003_.png" alt="Workflow render sample 03" width="30%" />
 </p>
 <p align="center">
-  <img src="examples/OC/ComfyUI_00004_.png" alt="Workflow render sample 04" width="30%" />
-  <img src="examples/OC/ComfyUI_00005_.png" alt="Workflow render sample 05" width="30%" />
+  <img src="examples/ComfyUI_00004_.png" alt="Workflow render sample 04" width="30%" />
+  <img src="examples/ComfyUI_00005_.png" alt="Workflow render sample 05" width="30%" />
 </p>
 
-More examples are available in [`examples/`](examples) and [`examples/OC/`](examples/OC).
+More examples are available in [`examples/`](examples).
 
 ## Try the Web Version
 
@@ -224,7 +224,6 @@ Workflow examples:
 Image examples:
 
 - [`examples`](examples)
-- [`examples/OC`](examples/OC)
 
 ## Behavior Notes
 
