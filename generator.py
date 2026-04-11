@@ -7,7 +7,9 @@ from pathlib import Path
 PACKAGE_DIR = Path(__file__).resolve().parent
 DATA_DIR = PACKAGE_DIR / "data"
 SAFE_FALLBACK_PRESET = "Balanced"
+USER_SETTINGS_PRESET = "User settings"
 BUST_KEYS = ("flat", "small", "medium", "large", "xlarge")
+UNFIXED_CHOICE = "(not fixed)"
 CATEGORY_FILES = {
     "hairStyle": "hair_styles.json",
     "hairColor": "hair_colors.json",
@@ -104,6 +106,10 @@ class DataCatalog:
     def preset_names(self):
         return tuple(self._presets.keys())
 
+    @property
+    def preset_profile_choices(self):
+        return tuple([USER_SETTINGS_PRESET] + list(self._presets.keys()))
+
     def get_preset(self, preset_name):
         return self._presets.get(preset_name, self._presets[SAFE_FALLBACK_PRESET])
 
@@ -122,15 +128,21 @@ class DataCatalog:
 
     def get_fixed_choices(self, category_key):
         category = self._categories[category_key]
-        return tuple(["none"] + [value["label"] for value in category["values"]])
+        return tuple([UNFIXED_CHOICE] + [value["label"] for value in category["values"]])
 
     def get_bust_choices(self):
-        return tuple(["none"] + [value["label"] for value in self._categories["bustSize"]["values"]])
+        return tuple([UNFIXED_CHOICE] + [value["label"] for value in self._categories["bustSize"]["values"]])
 
 
 class OriginalCharacterGenerator:
     def __init__(self, catalog=None):
         self.catalog = catalog or DataCatalog()
+
+    def normalize_fixed_choice(self, raw_value):
+        text = str(raw_value or "").strip()
+        if text.lower() in {"", "none", "random", "not fixed", "(not fixed)"}:
+            return "none"
+        return text
 
     def build_settings(
         self,
@@ -151,17 +163,21 @@ class OriginalCharacterGenerator:
         accessory_probability,
         production_mode,
     ):
-        preset_name = preset if preset in self.catalog.preset_names else SAFE_FALLBACK_PRESET
+        preset_name = (
+            preset
+            if preset in self.catalog.preset_names or preset == USER_SETTINGS_PRESET
+            else USER_SETTINGS_PRESET
+        )
         return {
             "base_prompt": str(base_prompt or "").strip(),
             "include_base_prompt": bool(include_base_prompt),
             "preset": preset_name,
             "fixed": {
-                "hair_style": fixed_hair_style or "none",
-                "hair_color": fixed_hair_color or "none",
-                "eye_color": fixed_eye_color or "none",
-                "accessory": fixed_accessory or "none",
-                "bust_size": fixed_bust_size or "none",
+                "hair_style": self.normalize_fixed_choice(fixed_hair_style),
+                "hair_color": self.normalize_fixed_choice(fixed_hair_color),
+                "eye_color": self.normalize_fixed_choice(fixed_eye_color),
+                "accessory": self.normalize_fixed_choice(fixed_accessory),
+                "bust_size": self.normalize_fixed_choice(fixed_bust_size),
             },
             "weights": {
                 "flat": clamp_probability(weight_flat, 0.0),
@@ -178,7 +194,7 @@ class OriginalCharacterGenerator:
         return json.dumps(settings, ensure_ascii=False, sort_keys=True)
 
     def resolve_option(self, category, raw_value):
-        if raw_value in (None, "", "none"):
+        if self.normalize_fixed_choice(raw_value) == "none":
             return None
 
         candidate = str(raw_value).strip().lower()

@@ -1,4 +1,4 @@
-from .generator import DataCatalog, OriginalCharacterGenerator
+from .generator import DataCatalog, OriginalCharacterGenerator, UNFIXED_CHOICE, USER_SETTINGS_PRESET
 from .preset_store import SettingsPresetStore
 
 
@@ -19,14 +19,14 @@ NODE_KEY_GENERATE_SIMPLE = "OC Generator Generate Character Simple"
 def settings_input_spec():
     balanced = CATALOG.get_preset("Balanced")
     return {
-        "base_prompt": ("STRING", {"default": CATALOG.default_base_prompt, "multiline": True}),
-        "include_base_prompt": ("BOOLEAN", {"default": False}),
-        "preset": (list(CATALOG.preset_names), {"default": "Balanced"}),
-        "fixed_hair_style": (list(CATALOG.get_fixed_choices("hairStyle")), {"default": "none"}),
-        "fixed_hair_color": (list(CATALOG.get_fixed_choices("hairColor")), {"default": "none"}),
-        "fixed_eye_color": (list(CATALOG.get_fixed_choices("eyeColor")), {"default": "none"}),
-        "fixed_accessory": (list(CATALOG.get_fixed_choices("accessory")), {"default": "none"}),
-        "fixed_bust_size": (list(CATALOG.get_bust_choices()), {"default": "none"}),
+        "base_prompt": ("STRING", {"default": "", "multiline": True}),
+        "include_base_prompt": ("BOOLEAN", {"default": True}),
+        "preset": (list(CATALOG.preset_profile_choices), {"default": USER_SETTINGS_PRESET}),
+        "fixed_hair_style": (list(CATALOG.get_fixed_choices("hairStyle")), {"default": UNFIXED_CHOICE}),
+        "fixed_hair_color": (list(CATALOG.get_fixed_choices("hairColor")), {"default": UNFIXED_CHOICE}),
+        "fixed_eye_color": (list(CATALOG.get_fixed_choices("eyeColor")), {"default": UNFIXED_CHOICE}),
+        "fixed_accessory": (list(CATALOG.get_fixed_choices("accessory")), {"default": UNFIXED_CHOICE}),
+        "fixed_bust_size": (list(CATALOG.get_bust_choices()), {"default": UNFIXED_CHOICE}),
         "weight_flat": ("FLOAT", {"default": balanced["bust_weights"]["flat"], "min": 0.0, "max": 1.0, "step": 0.01}),
         "weight_small": ("FLOAT", {"default": balanced["bust_weights"]["small"], "min": 0.0, "max": 1.0, "step": 0.01}),
         "weight_medium": ("FLOAT", {"default": balanced["bust_weights"]["medium"], "min": 0.0, "max": 1.0, "step": 0.01}),
@@ -309,8 +309,8 @@ class LoadOriginalCharacterSettingsPreset:
 class ShowOriginalCharacterSettings:
     CATEGORY = NODE_CATEGORY
     FUNCTION = "show"
-    RETURN_TYPES = ("STRING", "STRING")
-    RETURN_NAMES = ("settings_json", "settings_summary")
+    RETURN_TYPES = ("STRING",)
+    RETURN_NAMES = ("settings_summary",)
 
     @classmethod
     def INPUT_TYPES(cls):
@@ -324,6 +324,9 @@ class ShowOriginalCharacterSettings:
         payload = dict(settings or {})
         fixed = dict(payload.get("fixed", {}))
         weights = dict(payload.get("weights", {}))
+        def summarize_fixed(value):
+            return UNFIXED_CHOICE if value in (None, "", "none") else value
+
         summary = "\n".join(
             [
                 f"base_prompt: {payload.get('base_prompt', '')}",
@@ -331,11 +334,11 @@ class ShowOriginalCharacterSettings:
                 f"preset: {payload.get('preset', 'Balanced')}",
                 f"production_mode: {bool(payload.get('production_mode', True))}",
                 "fixed:",
-                f"  hair_style: {fixed.get('hair_style', 'none')}",
-                f"  hair_color: {fixed.get('hair_color', 'none')}",
-                f"  eye_color: {fixed.get('eye_color', 'none')}",
-                f"  accessory: {fixed.get('accessory', 'none')}",
-                f"  bust_size: {fixed.get('bust_size', 'none')}",
+                f"  hair_style: {summarize_fixed(fixed.get('hair_style', 'none'))}",
+                f"  hair_color: {summarize_fixed(fixed.get('hair_color', 'none'))}",
+                f"  eye_color: {summarize_fixed(fixed.get('eye_color', 'none'))}",
+                f"  accessory: {summarize_fixed(fixed.get('accessory', 'none'))}",
+                f"  bust_size: {summarize_fixed(fixed.get('bust_size', 'none'))}",
                 "weights:",
                 f"  flat: {weights.get('flat', 0.0):.2f}",
                 f"  small: {weights.get('small', 0.0):.2f}",
@@ -345,7 +348,7 @@ class ShowOriginalCharacterSettings:
                 f"accessory_probability: {float(payload.get('accessory_probability', 0.0)):.2f}",
             ]
         )
-        return (GENERATOR.settings_to_json(payload), summary)
+        return (summary,)
 
 
 class SaveOriginalCharacterSettingsJson:
