@@ -26,7 +26,6 @@ dist/
 Thumbs.db
 
 *.log
-pyproject.toml
 node.zip
 .github/workflows/
 user_presets/*.json

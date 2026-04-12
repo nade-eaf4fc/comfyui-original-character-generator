@@ -1,0 +1,11 @@
+{
+  "nodes": [
+    "OC Generator Settings",
+    "OC Generator Show Settings",
+    "OC Generator Save Settings JSON",
+    "OC Generator Load Settings Preset",
+    "OC Generator Generate Character",
+    "OC Generator Generate Character List",
+    "OC Generator Generate Character Simple"
+  ]
+}
