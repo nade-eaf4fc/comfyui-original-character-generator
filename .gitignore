@@ -27,5 +27,7 @@ Thumbs.db
 
 *.log
 pyproject.toml
+node.zip
+.github/workflows/
 user_presets/*.json
 !user_presets/example_soft_violet.json
