@@ -7,21 +7,21 @@
 ![Presets](https://img.shields.io/badge/Presets-user__presets-7c3aed?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-374151?style=flat-square)
 
-ComfyUI custom nodes for generating original character prompts and reusable settings.
+オリジナルキャラクター向けのプロンプト生成と、再利用できる設定管理のための ComfyUI カスタムノードです。
 
 **Languages:** [English](README.md) | [日本語](README_ja.md) | [한국어](README_ko.md) | [简体中文](README_zh-CN.md)
 
-## Screenshots
+## スクリーンショット
 
-### Workflow Overview
+### ワークフロー全体
 
 ![Workflow overview](docs/images/workflow-overview.png)
 
-### Saved Settings Preset
+### 保存済み Settings Preset
 
 ![Saved preset](docs/images/settings-preset.png)
 
-## Sample Outputs
+## 作例
 
 <p align="center">
   <img src="examples/original-character-example-01.png" alt="Original character example 01" width="30%" />
@@ -34,7 +34,7 @@ ComfyUI custom nodes for generating original character prompts and reusable sett
   <img src="examples/original-character-example-06.png" alt="Original character example 06" width="30%" />
 </p>
 
-### Workflow Render Samples
+### ワークフローからの出力例
 
 <p align="center">
   <img src="examples/ComfyUI_00001_.png" alt="Workflow render sample 01" width="30%" />
@@ -46,51 +46,51 @@ ComfyUI custom nodes for generating original character prompts and reusable sett
   <img src="examples/ComfyUI_00005_.png" alt="Workflow render sample 05" width="30%" />
 </p>
 
-More examples are available in [`examples/`](examples).
+その他の作例は [`examples/`](examples) にあります。
 
-## Try the Web Version
+## まず Web 版で試す
 
-If you want to try the generator in your browser first, use the web version here:
+ブラウザで先に試したい場合は、こちらの Web 版を使えます。
 
 - [original-character-generator-web](https://nade-eaf4fc.github.io/original-character-generator-web/)
 
-The web app can export compatible `settings_json` files for this ComfyUI node set.
+Web 版では、この ComfyUI ノードと互換性のある `settings_json` を書き出せます。
 
-## Note for Existing Users
+## 既存ユーザーへのお知らせ
 
-Some recent updates may break existing workflows or require reconnecting nodes.
+最近の更新により、既存の workflow がそのままでは動かず、ノードの再接続や更新が必要になる場合があります。
 
-Sorry for the inconvenience, and thank you to everyone who already cloned and tried the project.
+ご不便をおかけして申し訳ありません。早い段階で clone して試してくださった方々、本当にありがとうございます。
 
-## Features
+## 特徴
 
-- Generate original character prompts from reusable settings objects
-- Use fixed attributes for hair style, hair color, eye color, accessory, and bust size
-- Adjust weighted bust-size distribution and accessory probability
-- Save and load `settings_json` presets from `user_presets`
-- Inspect settings with a dedicated `Show Settings` node
-- Use included sample workflows and sample preset data
+- 再利用可能な設定オブジェクトからオリジナルキャラクターのプロンプトを生成
+- 髪型、髪色、瞳色、アクセサリー、胸サイズを固定可能
+- 胸サイズの重みとアクセサリー出現率を調整可能
+- `user_presets` で `settings_json` の保存と読み込みが可能
+- 専用の `Show Settings` ノードで設定内容を確認可能
+- サンプル workflow とサンプル preset を同梱
 
-## Installation
+## 導入方法
 
-### Option 1: Download or copy the folder
+### 方法 1: フォルダを直接入れる
 
-1. Place this repository folder inside `ComfyUI/custom_nodes/`.
-2. Restart ComfyUI.
-3. Search for `OC Generator` in the node menu.
+1. このリポジトリのフォルダを `ComfyUI/custom_nodes/` に置きます。
+2. ComfyUI を再起動します。
+3. ノードメニューで `OC Generator` を検索します。
 
-### Option 2: git clone
+### 方法 2: git clone
 
 ```bash
 cd ComfyUI/custom_nodes
 git clone https://github.com/nade-eaf4fc/comfyui-original-character-generator.git
 ```
 
-After cloning, restart ComfyUI.
+clone 後に ComfyUI を再起動してください。
 
-## Included Nodes
+## 含まれるノード
 
-The current node set is:
+現在のノード構成は以下のとおりです。
 
 - `OC Generator / Settings`
 - `OC Generator / Show Settings`
@@ -102,9 +102,9 @@ The current node set is:
 
 ### `OC Generator / Settings`
 
-Builds a reusable settings object and also outputs `settings_json`.
+再利用可能な設定オブジェクトを作成し、同時に `settings_json` も出力します。
 
-Inputs:
+入力:
 
 - `base_prompt`
 - `include_base_prompt`
@@ -122,30 +122,30 @@ Inputs:
 - `accessory_probability`
 - `production_mode`
 
-Outputs:
+出力:
 
 - `settings`
 - `settings_json`
 
 ### `OC Generator / Show Settings`
 
-Displays a readable settings summary.
+設定内容を読みやすいサマリーとして表示します。
 
-Outputs:
+出力:
 
 - `settings_summary`
 
 ### `OC Generator / Save Settings JSON`
 
-Parses a `settings_json` string, optionally saves it into `user_presets`, and outputs a reusable `settings` object.
+`settings_json` を解析し、必要に応じて `user_presets` に保存したうえで、再利用可能な `settings` オブジェクトを出力します。
 
-Inputs:
+入力:
 
 - `settings_json`
 - `file_name`
 - `save_enabled`
 
-Outputs:
+出力:
 
 - `settings`
 - `settings_json`
@@ -154,18 +154,18 @@ Outputs:
 
 ### `OC Generator / Load Settings Preset`
 
-Loads a saved preset from the `user_presets` directory.
+`user_presets` ディレクトリから保存済み preset を読み込みます。
 
-Outputs:
+出力:
 
 - `settings`
 - `settings_json`
 
 ### `OC Generator / Generate Character`
 
-Generates one result from a `settings` object.
+`settings` オブジェクトから 1 件の結果を生成します。
 
-Outputs:
+出力:
 
 - `prompt`
 - `formatted_prompt`
@@ -179,9 +179,9 @@ Outputs:
 
 ### `OC Generator / Generate Character List`
 
-Generates multiple results from a `settings` object.
+`settings` オブジェクトから複数件の結果を生成します。
 
-Outputs:
+出力:
 
 - `prompt_list`
 - `formatted_prompt_list`
@@ -195,55 +195,55 @@ Outputs:
 
 ### `OC Generator / Generate Character Simple`
 
-One-node version for quick use. It includes the same setting inputs and can output either a single result or a list.
+すぐ使いたい方向けの 1 ノード版です。設定入力をまとめて持ち、単体結果またはリスト結果を出力できます。
 
-## Presets and Saved Settings
+## Preset と保存設定
 
-Built-in presets:
+組み込み preset:
 
 - `Balanced`
 - `Petite`
 - `Curvy`
 - `Statement`
 
-Saved preset files are stored in:
+保存済み preset ファイルの保存先:
 
 - `user_presets/*.json`
 
-Sample preset:
+サンプル preset:
 
 - [`user_presets/example_soft_violet.json`](user_presets/example_soft_violet.json)
 
-The companion web UI can export compatible `settings_json` files that can be imported into this node set.
+付属の Web UI から出力した互換 `settings_json` も、このノードセットに読み込めます。
 
-## Example Files
+## サンプルファイル
 
-Workflow examples:
+Workflow サンプル:
 
 - [`workflows/oc-generator-basic-workflow_simple_and_list.json`](workflows/oc-generator-basic-workflow_simple_and_list.json)
 - [`workflows/oc-generator-soft-violet-preset-workflow.json`](workflows/oc-generator-soft-violet-preset-workflow.json)
 
-Image examples:
+画像サンプル:
 
 - [`examples`](examples)
 
-## Behavior Notes
+## 動作メモ
 
-- The same `seed`, settings, and data files will produce the same result.
-- List generation uses `seed + index`.
-- Bust weights accept raw values in the `0.00` to `1.00` range and are normalized internally.
-- `include_base_prompt = false` omits the base prompt from generated output.
-- If `include_base_prompt = true` and `base_prompt` is empty, the default base prompt is used.
-- If all bust weights are `0`, generation falls back to the `Balanced` preset distribution.
-- `fixed_bust_size` overrides weighted bust selection.
-- `fixed_accessory` overrides accessory probability when a concrete accessory is selected.
-- `fixed_accessory = none` means no fixed accessory in the node UI.
-- The special forced-no-accessory state is supported through saved `settings_json` data from the web integration.
-- `production_mode = true` hides entries marked with `developmentOnly: true`.
+- 同じ `seed`、同じ settings、同じ data ファイルであれば、同じ結果になります。
+- リスト生成では `seed + index` を使います。
+- 胸サイズの重みは `0.00` から `1.00` の値をそのまま入れられ、内部で正規化されます。
+- `include_base_prompt = false` の場合、生成結果からベースプロンプトを除外します。
+- `include_base_prompt = true` かつ `base_prompt` が空の場合、既定のベースプロンプトを使います。
+- 胸サイズの重みがすべて `0` の場合、`Balanced` preset の分布にフォールバックします。
+- `fixed_bust_size` を指定すると、重みによる胸サイズ選択よりそちらが優先されます。
+- `fixed_accessory` に具体的なアクセサリーを指定すると、アクセサリー出現率よりそちらが優先されます。
+- ノード UI 上での `fixed_accessory = none` は「固定なし」を意味します。
+- Web 連携で保存された `settings_json` では、「アクセサリーを必ずなしにする」専用状態も扱えます。
+- `production_mode = true` にすると、`developmentOnly: true` の項目は候補から除外されます。
 
-## Extending Data
+## データ拡張
 
-Edit the JSON files under `data/`:
+`data/` 配下の JSON ファイルを編集してください。
 
 - `data/base_prompt.json`
 - `data/presets.json`
@@ -253,7 +253,7 @@ Edit the JSON files under `data/`:
 - `data/accessories.json`
 - `data/bust_sizes.json`
 
-Supported option fields:
+サポートされている項目:
 
 - `key`
 - `prompt`
@@ -261,7 +261,7 @@ Supported option fields:
 - `name`
 - `developmentOnly`
 
-Simple string entries are also supported in category files.
+カテゴリファイルでは、単純な文字列配列も使えます。
 
 ## Acknowledgements
 

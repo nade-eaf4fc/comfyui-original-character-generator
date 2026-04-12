@@ -7,21 +7,21 @@
 ![Presets](https://img.shields.io/badge/Presets-user__presets-7c3aed?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-374151?style=flat-square)
 
-ComfyUI custom nodes for generating original character prompts and reusable settings.
+这是一个用于生成原创角色提示词并管理可复用设置的 ComfyUI 自定义节点包。
 
 **Languages:** [English](README.md) | [日本語](README_ja.md) | [한국어](README_ko.md) | [简体中文](README_zh-CN.md)
 
-## Screenshots
+## 截图
 
-### Workflow Overview
+### 工作流总览
 
 ![Workflow overview](docs/images/workflow-overview.png)
 
-### Saved Settings Preset
+### 已保存的 Settings Preset
 
 ![Saved preset](docs/images/settings-preset.png)
 
-## Sample Outputs
+## 示例输出
 
 <p align="center">
   <img src="examples/original-character-example-01.png" alt="Original character example 01" width="30%" />
@@ -34,7 +34,7 @@ ComfyUI custom nodes for generating original character prompts and reusable sett
   <img src="examples/original-character-example-06.png" alt="Original character example 06" width="30%" />
 </p>
 
-### Workflow Render Samples
+### 工作流渲染示例
 
 <p align="center">
   <img src="examples/ComfyUI_00001_.png" alt="Workflow render sample 01" width="30%" />
@@ -46,51 +46,51 @@ ComfyUI custom nodes for generating original character prompts and reusable sett
   <img src="examples/ComfyUI_00005_.png" alt="Workflow render sample 05" width="30%" />
 </p>
 
-More examples are available in [`examples/`](examples).
+更多示例请查看 [`examples/`](examples)。
 
-## Try the Web Version
+## 先试用 Web 版本
 
-If you want to try the generator in your browser first, use the web version here:
+如果你想先在浏览器里试用生成器，可以使用这里的 Web 版本：
 
 - [original-character-generator-web](https://nade-eaf4fc.github.io/original-character-generator-web/)
 
-The web app can export compatible `settings_json` files for this ComfyUI node set.
+该 Web 应用可以导出与此 ComfyUI 节点集兼容的 `settings_json` 文件。
 
-## Note for Existing Users
+## 给现有用户的说明
 
-Some recent updates may break existing workflows or require reconnecting nodes.
+最近的一些更新可能会导致现有工作流无法直接运行，或者需要重新连接节点。
 
-Sorry for the inconvenience, and thank you to everyone who already cloned and tried the project.
+很抱歉带来不便，也感谢所有已经 clone 并尝试过这个项目的朋友。
 
-## Features
+## 功能
 
-- Generate original character prompts from reusable settings objects
-- Use fixed attributes for hair style, hair color, eye color, accessory, and bust size
-- Adjust weighted bust-size distribution and accessory probability
-- Save and load `settings_json` presets from `user_presets`
-- Inspect settings with a dedicated `Show Settings` node
-- Use included sample workflows and sample preset data
+- 通过可复用的 settings 对象生成原创角色提示词
+- 可固定发型、发色、瞳色、配饰和胸围尺寸
+- 可调整胸围尺寸权重分布和配饰出现概率
+- 可在 `user_presets` 中保存和加载 `settings_json`
+- 可使用专用的 `Show Settings` 节点查看设置摘要
+- 附带示例工作流和示例 preset 数据
 
-## Installation
+## 安装
 
-### Option 1: Download or copy the folder
+### 方法 1：直接复制文件夹
 
-1. Place this repository folder inside `ComfyUI/custom_nodes/`.
-2. Restart ComfyUI.
-3. Search for `OC Generator` in the node menu.
+1. 将此仓库文件夹放入 `ComfyUI/custom_nodes/`。
+2. 重启 ComfyUI。
+3. 在节点菜单中搜索 `OC Generator`。
 
-### Option 2: git clone
+### 方法 2：git clone
 
 ```bash
 cd ComfyUI/custom_nodes
 git clone https://github.com/nade-eaf4fc/comfyui-original-character-generator.git
 ```
 
-After cloning, restart ComfyUI.
+clone 之后请重启 ComfyUI。
 
-## Included Nodes
+## 包含的节点
 
-The current node set is:
+当前节点集如下：
 
 - `OC Generator / Settings`
 - `OC Generator / Show Settings`
@@ -102,9 +102,9 @@ The current node set is:
 
 ### `OC Generator / Settings`
 
-Builds a reusable settings object and also outputs `settings_json`.
+构建一个可复用的 settings 对象，同时输出 `settings_json`。
 
-Inputs:
+输入：
 
 - `base_prompt`
 - `include_base_prompt`
@@ -122,30 +122,30 @@ Inputs:
 - `accessory_probability`
 - `production_mode`
 
-Outputs:
+输出：
 
 - `settings`
 - `settings_json`
 
 ### `OC Generator / Show Settings`
 
-Displays a readable settings summary.
+以易读的摘要形式显示当前设置。
 
-Outputs:
+输出：
 
 - `settings_summary`
 
 ### `OC Generator / Save Settings JSON`
 
-Parses a `settings_json` string, optionally saves it into `user_presets`, and outputs a reusable `settings` object.
+解析 `settings_json` 字符串，可选择将其保存到 `user_presets`，并输出一个可复用的 `settings` 对象。
 
-Inputs:
+输入：
 
 - `settings_json`
 - `file_name`
 - `save_enabled`
 
-Outputs:
+输出：
 
 - `settings`
 - `settings_json`
@@ -154,18 +154,18 @@ Outputs:
 
 ### `OC Generator / Load Settings Preset`
 
-Loads a saved preset from the `user_presets` directory.
+从 `user_presets` 目录加载已保存的 preset。
 
-Outputs:
+输出：
 
 - `settings`
 - `settings_json`
 
 ### `OC Generator / Generate Character`
 
-Generates one result from a `settings` object.
+根据一个 `settings` 对象生成单个结果。
 
-Outputs:
+输出：
 
 - `prompt`
 - `formatted_prompt`
@@ -179,9 +179,9 @@ Outputs:
 
 ### `OC Generator / Generate Character List`
 
-Generates multiple results from a `settings` object.
+根据一个 `settings` 对象生成多个结果。
 
-Outputs:
+输出：
 
 - `prompt_list`
 - `formatted_prompt_list`
@@ -195,55 +195,55 @@ Outputs:
 
 ### `OC Generator / Generate Character Simple`
 
-One-node version for quick use. It includes the same setting inputs and can output either a single result or a list.
+适合快速使用的单节点版本。它包含相同的设置输入，并可输出单个结果或列表结果。
 
-## Presets and Saved Settings
+## Preset 与已保存设置
 
-Built-in presets:
+内置 preset：
 
 - `Balanced`
 - `Petite`
 - `Curvy`
 - `Statement`
 
-Saved preset files are stored in:
+保存的 preset 文件位置：
 
 - `user_presets/*.json`
 
-Sample preset:
+示例 preset：
 
 - [`user_presets/example_soft_violet.json`](user_presets/example_soft_violet.json)
 
-The companion web UI can export compatible `settings_json` files that can be imported into this node set.
+配套的 Web UI 也可以导出兼容的 `settings_json`，并导入到这组节点中使用。
 
-## Example Files
+## 示例文件
 
-Workflow examples:
+工作流示例：
 
 - [`workflows/oc-generator-basic-workflow_simple_and_list.json`](workflows/oc-generator-basic-workflow_simple_and_list.json)
 - [`workflows/oc-generator-soft-violet-preset-workflow.json`](workflows/oc-generator-soft-violet-preset-workflow.json)
 
-Image examples:
+图像示例：
 
 - [`examples`](examples)
 
-## Behavior Notes
+## 行为说明
 
-- The same `seed`, settings, and data files will produce the same result.
-- List generation uses `seed + index`.
-- Bust weights accept raw values in the `0.00` to `1.00` range and are normalized internally.
-- `include_base_prompt = false` omits the base prompt from generated output.
-- If `include_base_prompt = true` and `base_prompt` is empty, the default base prompt is used.
-- If all bust weights are `0`, generation falls back to the `Balanced` preset distribution.
-- `fixed_bust_size` overrides weighted bust selection.
-- `fixed_accessory` overrides accessory probability when a concrete accessory is selected.
-- `fixed_accessory = none` means no fixed accessory in the node UI.
-- The special forced-no-accessory state is supported through saved `settings_json` data from the web integration.
-- `production_mode = true` hides entries marked with `developmentOnly: true`.
+- 相同的 `seed`、settings 和 data 文件会生成相同的结果。
+- 列表生成使用 `seed + index`。
+- 胸围尺寸权重可直接输入 `0.00` 到 `1.00` 范围内的值，内部会自动归一化。
+- `include_base_prompt = false` 时，生成结果中不会包含基础提示词。
+- 如果 `include_base_prompt = true` 且 `base_prompt` 为空，则会使用默认基础提示词。
+- 如果所有胸围尺寸权重都为 `0`，则会回退到 `Balanced` preset 分布。
+- `fixed_bust_size` 的优先级高于基于权重的胸围尺寸选择。
+- 当 `fixed_accessory` 指定了具体配饰时，它的优先级高于配饰概率设置。
+- 在节点 UI 中，`fixed_accessory = none` 表示不固定配饰。
+- 通过 Web 集成保存的 `settings_json` 还支持“强制无配饰”的特殊状态。
+- `production_mode = true` 会隐藏标记为 `developmentOnly: true` 的条目。
 
-## Extending Data
+## 扩展数据
 
-Edit the JSON files under `data/`:
+请编辑 `data/` 下的 JSON 文件：
 
 - `data/base_prompt.json`
 - `data/presets.json`
@@ -253,7 +253,7 @@ Edit the JSON files under `data/`:
 - `data/accessories.json`
 - `data/bust_sizes.json`
 
-Supported option fields:
+支持的字段：
 
 - `key`
 - `prompt`
@@ -261,7 +261,7 @@ Supported option fields:
 - `name`
 - `developmentOnly`
 
-Simple string entries are also supported in category files.
+分类文件中也支持简单的字符串条目。
 
 ## Acknowledgements
 
