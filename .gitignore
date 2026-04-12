@@ -26,5 +26,6 @@ dist/
 Thumbs.db
 
 *.log
+pyproject.toml
 user_presets/*.json
 !user_presets/example_soft_violet.json
